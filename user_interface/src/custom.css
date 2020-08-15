@@ -1,0 +1,277 @@
+:root {
+  --DarkBlue: #010d1f;
+  --BorderColor: #6c757d;
+  --TextColor: #b3ccdd;
+}
+
+.bg-side {
+  background-color: var(--DarkBlue) !important;
+}
+
+/* .nav-link:hover {
+  color: #0d662b;
+} */
+
+.h-divider {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 1px;
+  width: 100%;
+  border-top: 1px solid gray;
+}
+
+textarea {
+  resize: none;
+}
+
+/********************************  LogInPage  ********************************/
+.LogInPage {
+  position: fixed;
+  background-image: url("https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  line-height: 100%;
+}
+
+.LoginText {
+  color: var(--TextColor);
+}
+
+.LogInForm {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -73%);
+  border: solid grey 1px;
+  border-radius: 10px;
+}
+
+.Logo {
+  margin: 15px;
+  text-align: center;
+  font-family: Cursive;
+  font-weight: bold;
+}
+
+.InputField {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.LogInButton {
+  font-weight: bold;
+  font-size: 1.1em;
+  display: flex;
+  border-radius: 20px;
+  justify-content: center;
+  width: 100%;
+}
+
+.SignUpOption {
+  margin: 0;
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  border: solid grey 1px;
+  border-radius: 10px;
+  height: 60px;
+}
+
+.LogInOption {
+  margin: 0;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+  border: solid grey 1px;
+  border-radius: 10px;
+  height: 60px;
+}
+
+/* .LogInButton {
+  height: 70px;
+  width: 350px;
+  font-size: 1.25em;
+  font-weight: bold;
+  border-radius: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+} */
+
+/* .LogInRow {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+}
+
+.SignUpRow {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
+} */
+
+/* .modal-content {
+  border-radius: 1.25em;
+  width: 90%;
+}
+
+.ModalButton {
+  border-radius: 20px;
+} */
+
+/* .Tab {
+  color: var(--TextColor);
+} */
+
+/********************************  Profile Page  ********************************/
+.CoverContainer {
+  /* position: fixed; */
+  margin-left: 0px;
+  margin-top: -8px;
+  height: 300px;
+  width: 100%;
+}
+
+.CoverPhoto {
+  /* position: fixed; */
+  background-image: url("https://www.colorhexa.com/4f5b66.png");
+  background-size: cover;
+  width: 100%;
+  height: 220px;
+  line-height: 100%;
+}
+
+.ProfilePhoto {
+  position: absolute;
+  top: 140px;
+  left: 4%;
+  border: solid var(--DarkBlue) 4px;
+}
+
+/********************************  NavBar  ********************************/
+.NavBar {
+  background-color: var(--DarkBlue);
+  border-bottom: 1px solid var(--BorderColor);
+}
+
+.navbar-dark .navbar-brand {
+  color: var(--TextColor);
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+/********************************  SideBar  ********************************/
+.sidebar {
+  position: fixed;
+  border-right: 1px solid;
+  border-color: var(--BorderColor);
+  background-color: var(--DarkBlue);
+  width: 25%;
+  height: 100%;
+}
+
+.Nav-Link {
+  color: var(--TextColor);
+  /* border: 3px green solid; */
+  font-weight: bold;
+  font-size: 1.5em;
+  float: left;
+  margin-left: -15px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.element-center {
+  margin-left: 3.5em;
+  width: 80%;
+  padding: 1.25em;
+}
+
+/********************************  NewFeeds  ********************************/
+.feed-div {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: var(--DarkBlue);
+  color: var(--TextColor);
+}
+
+.form-control {
+  background-color: var(--DarkBlue);
+  border: 1px solid var(--BorderColor);
+}
+
+.form-button {
+  border: 2px solid primary;
+  background-color: primary;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.PostTweet {
+  position: sticky;
+  height: 150px;
+  width: 100%;
+  margin: auto;
+}
+
+.PostBox {
+  height: 100px;
+  width: 96%;
+  margin: auto;
+  align-content: center;
+}
+
+.feed-content {
+  margin-bottom: 0.5em;
+  margin-right: 1em;
+}
+
+/********************************  Suggested  ********************************/
+.suggested {
+  position: fixed;
+  background-color: var(--DarkBlue);
+  border-left: 1px solid;
+  border-color: var(--BorderColor);
+  width: 25%;
+  height: 100%;
+  color: var(--TextColor);
+  text-align: center;
+  padding-top: 10px;
+}
+
+.suggestions {
+  padding-top: 10px;
+}
+
+/******************************  TweetElement  ******************************/
+.UserName {
+  /* background-color: white; */
+  margin-left: -15px;
+  font-weight: bold;
+  color: var(--TextColor);
+}
+
+.DropDownButt {
+  background-color: transparent;
+  border: none;
+}
+
+.Actions {
+  /* background-color: lightgreen; */
+  margin-top: -0.75em;
+  text-align: center;
+}

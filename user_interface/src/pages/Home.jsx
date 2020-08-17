@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Feed from "../main/Feed";
 import { Container, Row, Col } from "react-bootstrap";
-import NavBar from "../main/NavBar";
+//import NavBar from "../main/NavBar";
+import CNavBar from "../containers/CNavbar";
 import SideBar from "../main/SideBar";
 import Suggested from "../main/Suggested";
 
@@ -11,7 +12,7 @@ export class Home extends Component {
       <Container fluid>
         <Row bg="info">
           <Col>
-            <NavBar />
+            <CNavBar />
           </Col>
         </Row>
         <Row>

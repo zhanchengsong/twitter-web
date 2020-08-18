@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Navbar, Nav, Form, Button, FormControl, Image } from "react-bootstrap";
-import '../actionTypes';
+import '../redux/actionTypes';
 //import store from "../store";
-import {loginAction} from '../userActions';
+import {loginAction} from '../redux/userActions';
 
 export class NavBar extends Component {
 

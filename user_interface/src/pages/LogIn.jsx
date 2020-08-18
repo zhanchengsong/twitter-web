@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Nav, Form, Button, Row, Col, Container } from "react-bootstrap";
-import store from "../store";
+import store from "../redux/store";
 
 export class LogIn extends Component {
   constructor() {

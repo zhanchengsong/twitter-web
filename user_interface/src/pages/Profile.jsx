@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import NavBar from "../main/NavBar";
-import SideBar from "../main/SideBar";
-import Suggested from "../main/Suggested";
-import ProfileInfo from "../main/ProfileInfo";
+import NavBar from "../components/NavBar";
+import SideBar from "../components/SideBar";
+import Suggested from "../components/Suggested";
+import ProfileInfo from "../components/ProfileInfo";
 
 export class Profile extends Component {
   render() {

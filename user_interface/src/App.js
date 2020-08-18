@@ -12,7 +12,6 @@ import { Home } from "./pages/Home";
 import { Profile } from "./pages/Profile";
 import { Notifications } from "./pages/Notifications";
 import { Explore } from "./pages/Explore";
-import { Messages } from "./pages/Messages";
 import { LogIn } from "./pages/LogIn";
 import { SignUp } from "./pages/SignUp";
 
@@ -23,7 +22,6 @@ function App() {
         <Switch>
           <Route exact path="/home" component={Home} />
           <Route path="/profile" component={Profile} />
-          <Route path="/messages" component={Messages} />
           <Route path="/notifications" component={Notifications} />
           <Route path="/explore" component={Explore} />
           <Route path="/login" component={LogIn} />

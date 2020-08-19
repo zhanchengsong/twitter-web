@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import NavBar from "../main/NavBar";
-import SideBar from "../main/SideBar";
-import Suggested from "../main/Suggested";
+import NavBar from "../components/NavBar";
+import SideBar from "../components/SideBar";
+import Suggested from "../components/Suggested";
 
 export class Explore extends Component {
   render() {

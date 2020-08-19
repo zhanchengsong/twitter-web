@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Nav, Badge, Navbar } from "react-bootstrap";
 import { GoHome, GoPerson, GoMail, GoBell, GoSignOut } from "react-icons/go";
 import { FaHashtag } from "react-icons/fa";
-import store from "../store";
+import store from "../redux/store";
 
 export class SideBar extends Component {
   constructor() {

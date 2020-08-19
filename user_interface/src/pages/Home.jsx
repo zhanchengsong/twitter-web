@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Feed from "../main/Feed";
+import Feed from "../components/Feed";
 import { Container, Row, Col } from "react-bootstrap";
 //import NavBar from "../main/NavBar";
 import CNavBar from "../containers/CNavbar";
-import SideBar from "../main/SideBar";
-import Suggested from "../main/Suggested";
+import SideBar from "../components/SideBar";
+import Suggested from "../components/Suggested";
 
 export class Home extends Component {
   render() {

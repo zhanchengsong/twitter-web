@@ -20,8 +20,8 @@ export class LogIn extends Component {
 
   handlePage = () => {
     return this.state.myEmail === "gordonli121@gmail.com"
-      ? "/home"
-      : "/profile";
+      ? "/main/home"
+      : "/main/profile";
   };
 
   routeChange = () => {

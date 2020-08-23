@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import { Nav, Form, Button, Row, Col, Container } from "react-bootstrap";
-import store from "../redux/store";
-
+import '../service/userservice';
+import {loginUser} from "../service/userservice";
+import {loginAction} from "../redux/userActions";
 export class LogIn extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       showL: false,
       showS: false,
       myEmail: "",
       myPassword: "",
+      loggedIn: false
     };
     this.handleEmail = this.handleEmail.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
@@ -19,39 +21,33 @@ export class LogIn extends Component {
   }
 
   handlePage = () => {
-    return this.state.myEmail === "gordonli121@gmail.com"
-      ? "/main/home"
-      : "/main/profile";
+    // return this.state.myEmail === "gordonli121@gmail.com"
+    //   ? "/main/home"
+    //   : "/main/profile";
+    return this.state.loggedIn  ? "/main/home":"/login";
   };
 
   routeChange = () => {
-    let path = `${this.handlePage()}`;
 
-    // const axios = require("axios").default;
-    // let myurl = "http://localhost:9092/tweets";
-    // let reponse = axios
-    //   .get(myurl, {
-    //     crossDomain: true,
-    //   })
-    //   .then((res) => {
-    //     return res.data[0];
-    //   })
-    //   .catch((error) => {
-    //     return error;
-    //   });
-
-    store.dispatch({
-      type: "LogIn",
-      payload: {
-        userName: "Gordon",
-        userID: "gordo",
-        userPic: "http://google.ca",
-        JWTToken: "abcdefg",
-      },
+    loginUser(this.state.myEmail, this.state.myPassword).then( data => {
+        console.log(data);
+        this.props.dispatch(
+            loginAction({
+              userName: data.username,
+              userID: data.ID,
+              userPic: data.iconUrl,
+            }, data.jwtToken)
+        );
+        this.setState({loggedIn:true})
+        let path = `${this.handlePage()}`;
+        console.log(path);
+        this.props.history.push(path);
+    }).catch(e => {
+        console.log(e);
     });
 
-    this.props.history.push(path);
-    console.log(store.getState());
+
+
   };
 
   handleSubmit = (event) => {

@@ -32,7 +32,7 @@ export class NavBar extends Component {
 
   loginUser = () => {
     console.log("Making Request");
-    let token_p = fetch("/users/token", {
+    let token_p = fetch("/api/v1/users/token", {
       method: "POST",
       mode: "cors",
       headers: {

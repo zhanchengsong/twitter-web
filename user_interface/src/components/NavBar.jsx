@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { Navbar, Nav, Form, Button, FormControl, Image } from "react-bootstrap";
 import '../redux/actionTypes';
 //import store from "../store";
@@ -56,6 +57,10 @@ export class NavBar extends Component {
       console.log(e);
     });
   }
+}
+
+NavBar.propTypes = {
+  JWTToken: PropTypes.string.isRequired,
 }
 
 /**

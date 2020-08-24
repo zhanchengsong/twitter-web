@@ -7,7 +7,7 @@ export default function reducer(
       userID: "userID",
       userPic: "http://userpic",
     },
-    JWTToken: "",
+    JWTToken: null,
   },
   action
 ) {
@@ -29,7 +29,7 @@ export default function reducer(
           userID: "userID",
           userPic: "http://userpic",
         },
-        JWTToken: "a",
+        JWTToken: null,
       };
     default:
       return state;

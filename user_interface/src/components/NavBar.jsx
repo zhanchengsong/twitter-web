@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Navbar, Nav, Form, Button, FormControl, Image } from "react-bootstrap";
-import '../redux/actionTypes';
-//import store from "../store";
-import {loginAction} from '../redux/userActions';
+import "../redux/actionTypes";
 
 export class NavBar extends Component {
-
   render() {
     return (
       <Navbar className="NavBar" variant="dark" fixed="top">
@@ -16,10 +13,10 @@ export class NavBar extends Component {
           <Button className="form-button">Search</Button>
         </Form>
         <Nav className="ml-auto">
-          <Nav.Link onClick={this.loginUser}>
+          <Nav.Link href="/main/profile">
             {this.props.userProfile.userName}
           </Nav.Link>
-          <Nav.Link href="#picture">
+          <Nav.Link href="/main/profile">
             <Image
               style={{ width: 30, height: "auto" }}
               src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
@@ -30,38 +27,11 @@ export class NavBar extends Component {
       </Navbar>
     );
   }
-
-  loginUser = () => {
-    console.log("Making Request");
-    let token_p = fetch("/api/v1/users/token", {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-type" : "Application/json"
-      },
-      body: JSON.stringify({
-        email: "testest@gmail.com",
-        password: "testpass"
-      })
-    });
-    token_p.then(res => {
-      console.log(res);
-      res.json().then(res_json => {
-          let tk = res_json.JWTToken;
-          let action = loginAction({userName:"Gordon"}, tk);
-          this.props.dispatch(action);
-      }).catch(e => {
-        console.log(e);
-      });
-    }).catch(e => {
-      console.log(e);
-    });
-  }
 }
 
 NavBar.propTypes = {
   JWTToken: PropTypes.string.isRequired,
-}
+};
 
 /**
  * We need to add propType checks

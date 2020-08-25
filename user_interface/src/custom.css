@@ -4,6 +4,8 @@
   --TextColor: #b3ccdd;
 }
 
+
+
 .bg-side {
   background-color: var(--DarkBlue) !important;
 }
@@ -209,10 +211,10 @@ textarea {
   color: var(--TextColor);
 }
 
-.form-control {
-  background-color: var(--DarkBlue);
-  border: 1px solid var(--BorderColor);
-}
+/*.form-control {*/
+/*  background-color: var(--DarkBlue);*/
+/*  border: 1px solid var(--BorderColor);*/
+/*}*/
 
 .form-button {
   border: 2px solid primary;

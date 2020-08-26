@@ -9,7 +9,7 @@ let icon_s3 = new aws.S3({
 })
 // Use the path ./react-build for searching static file
 app.use(express.static(path.join(__dirname, 'react-build')));
-app.get('/icon_img/:filename', function(req, res) {
+app.get('/icon-img/:filename', function(req, res) {
     let filename = req.params.filename;
     if (!filename) {
         return res.status(400).end("missing filename");
@@ -42,6 +42,7 @@ app.get('/icon_img/:filename', function(req, res) {
 
 // Start serving at /
 app.get('/*', function(req, res) {
+    console.log(req.path);
     res.sendFile(path.join(__dirname, 'react-build', 'index.html'));
 });
 

@@ -5,6 +5,7 @@ import CNavBar from "../containers/CNavbar";
 import SideBar from "../components/SideBar";
 import Feed from "../components/Feed";
 import ProfileInfo from "../components/ProfileInfo";
+import CProfileInfo from "../containers/CProfileInfo";
 import Notifications from "../components/Notifications";
 import Exploring from "../components/Exploring";
 import Suggested from "../components/Suggested";
@@ -31,7 +32,7 @@ export class Main extends Component {
             <Router>
               <Switch>
                 <Route exact path="/main/home" component={Feed} />
-                <Route path="/main/profile" component={ProfileInfo} />
+                <Route path="/main/profile" component={CProfileInfo} />
                 <Route path="/main/notifications" component={Notifications} />
                 <Route path="/main/explore" component={Exploring} />
                 <Route path="/main" component={Feed} />

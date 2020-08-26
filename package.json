@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/zhanchengsong/twitter-web#readme",
   "dependencies": {
+    "aws-sdk": "^2.739.0",
     "express": "^4.17.1"
   }
 }

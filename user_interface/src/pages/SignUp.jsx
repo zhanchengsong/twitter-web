@@ -203,7 +203,7 @@ export class SignUp extends Component {
                      Have an account ? Go to login
                   </a>
                 </Form.Row>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" onClick={this.handleSubmit}>
                   Submit
                 </Button>
               </Form>

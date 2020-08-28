@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Row, Col, Image } from "react-bootstrap";
 import TweetElement from "./TweetElement";
 import serviceURL from "../configuration/service-path";
-
+import socket from "../service/socket-io-service";
 export class ProfileInfo extends Component {
   render() {
     return (
@@ -55,6 +55,13 @@ export class ProfileInfo extends Component {
       </div>
     );
   }
+  componentDidMount() {
+    console.log("Biding socket event");
+    socket.on("hello", data => {
+      console.log("Hello sent data" + data);
+    })
+  }
+
 }
 
 export default ProfileInfo;

@@ -6,7 +6,6 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import NoMatch from "./pages/NoMatch";
 import CLogin from "./containers/CLogIn";
-
 function App() {
   return (
     <React.Fragment>

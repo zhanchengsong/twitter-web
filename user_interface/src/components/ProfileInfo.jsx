@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Row, Col, Image } from "react-bootstrap";
 import TweetElement from "./TweetElement";
-
+import serviceURL from "../configuration/service-path";
+import socket from "../service/socket-io-service";
 export class ProfileInfo extends Component {
   render() {
     return (
@@ -15,7 +16,10 @@ export class ProfileInfo extends Component {
               <Image
                 className="ProfilePhoto"
                 style={{ width: 140, height: "auto" }}
-                src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                src={
+                  "/"+
+                  serviceURL.imageUrl +
+                  this.props.userProfile.userPic }
                 roundedCircle
               />
             </Row>
@@ -26,7 +30,7 @@ export class ProfileInfo extends Component {
             >
               <Col>
                 <h4 className="font-weight-bold">Gordon</h4>
-                <h6>@Gordo</h6>
+                <h6>{"@" + this.props.userProfile.userName}</h6>
                 <h6>
                   {1} Following {"  "} {6} Followers
                 </h6>
@@ -51,6 +55,13 @@ export class ProfileInfo extends Component {
       </div>
     );
   }
+  componentDidMount() {
+    console.log("Biding socket event");
+    socket.on("hello", data => {
+      console.log("Hello sent data" + data);
+    })
+  }
+
 }
 
 export default ProfileInfo;

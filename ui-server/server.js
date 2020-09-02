@@ -4,9 +4,11 @@ const app = express();
 //const http = require('http').createServer(app);
 //const io = require('socket.io')(http);
 const aws = require('aws-sdk');
+let {set, get, del, setJson, getJson} = require('./services/redis-service');
 const logger = require("./logging/winston-logger");
 const {subscribeConnect} = require("./services/socket-io-service");
 const morgan = require('morgan');
+
 // Config for env type
 let env = process.env.ENV_TYPE;
 // Create s3 client
@@ -67,4 +69,24 @@ let server = app.listen(port, () => {
 })
 let io = require('socket.io').listen(server);
 subscribeConnect(io);
+// Set up SQS
+let {createConsumer} = require('./services/aws-sqs-service');
+const consumer = createConsumer(async message => {
+    let msg = {};
+    msg.MessageId = message.MessageId;
+    msg.body = JSON.parse(message.Body);
+    let receiver = msg.body.receiver;
+    logger.info("Received message from SQS " + JSON.stringify(msg));
+    let queuedMessages = await getJson(`${receiver}_mentions`);
+    if (!queuedMessages) {queuedMessages = [];}
+    queuedMessages.push(msg);
+    await setJson(`${receiver}_mentions`, queuedMessages);
+    // lets notify the user through socket.io
+    let socketId = await get(`${receiver}_socket`);
+    let nsp = io.of("/mentions");
+    let socket = nsp.sockets[socketId];
+    socket.emit("mentions", queuedMessages);
+})
+consumer.start();
+
 

@@ -2,8 +2,8 @@ import {NavBar} from '../components/NavBar';
 import {connect} from 'react-redux';
 const mapStateToProps = (state) => {
     return {
-        userProfile: state.userProfile,
-        JWTToken: state.JWTToken
+        userProfile: state.user.userProfile || {},
+        JWTToken: state.user.JWTToken || ""
     }
 }
 

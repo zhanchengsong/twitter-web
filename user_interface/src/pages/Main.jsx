@@ -9,8 +9,11 @@ import CProfileInfo from "../containers/CProfileInfo";
 import Notifications from "../components/Notifications";
 import Exploring from "../components/Exploring";
 import Suggested from "../components/Suggested";
-
+import {getSocket} from "../service/socket-io-service";
+import {socketCreateAction} from "../redux/socketActions";
+import CSideBar from "../containers/CSideBar";
 export class Main extends Component {
+
   render() {
     return (
       <Container fluid>
@@ -26,7 +29,7 @@ export class Main extends Component {
         </Row>
         <Row>
           <Col className="col-3 p-0">
-            <SideBar />
+            <CSideBar />
           </Col>
           <Col className="col-6 p-0 bg-success">
             <Router>
@@ -46,6 +49,8 @@ export class Main extends Component {
       </Container>
     );
   }
+
+
 }
 
 export default Main;

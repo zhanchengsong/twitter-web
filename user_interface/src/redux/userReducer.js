@@ -1,14 +1,7 @@
 import {LOG_IN} from './actionTypes';
-export default function reducer(
-  state = {
-    isLoggedIn: false,
-    userProfile: {
-      userName: "UserName",
-      userID: "userID",
-      userPic: "http://userpic",
-    },
-    JWTToken: null,
-  },
+
+export default function userReducer(
+  state = {},
   action
 ) {
   switch (action.type) {
@@ -31,15 +24,9 @@ export default function reducer(
         },
         JWTToken: null,
       };
+
     default:
       return state;
   }
 }
 
-// structure:
-
-// user info:
-// - userName: String
-// - loggedIn: Boolean
-// - userPic: href
-// -

@@ -83,9 +83,15 @@ const consumer = createConsumer(async message => {
     await setJson(`${receiver}_mentions`, queuedMessages);
     // lets notify the user through socket.io
     let socketId = await get(`${receiver}_socket`);
-    let nsp = io.of("/mentions");
-    let socket = nsp.sockets[socketId];
-    socket.emit("mentions", queuedMessages);
+    if (socketId) {
+        let nsp = io.of("/mentions");
+        let socket = nsp.sockets[socketId];
+        if (socket && socket.isConnected) {
+            socket.emit("mentions", queuedMessages);
+        }
+    }
+
+
 })
 consumer.start();
 

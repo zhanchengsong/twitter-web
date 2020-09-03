@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { TweetElement } from "./TweetElement";
 
 export class Feed extends Component {
+
   render() {
     return (
       <div className="feed-div">
@@ -23,48 +24,7 @@ export class Feed extends Component {
         <div>
           <TweetElement />
           <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
-          <TweetElement />
-          <hr className="h-divider"></hr>
+
         </div>
       </div>
     );

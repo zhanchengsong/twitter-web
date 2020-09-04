@@ -23,6 +23,30 @@ export async function createUser(userdata) {
     }
     return response.json();
 }
+export async function checkUsername(username) {
+    const checkUrl = baseUrl + `/checkByUsername?username=${username}`;
+    let response = await fetch(
+        checkUrl,
+        {
+            method: "GET",
+            mode: 'cors',
+        }
+    );
+    let jsonBody = await response.json();
+    return jsonBody.Exists;
+}
+export async function checkEmail(email) {
+    const checkUrl = baseUrl + `/checkByEmail?email=${email}`;
+    let response = await fetch(
+        checkUrl,
+        {
+            method: "GET",
+            mode: 'cors',
+        }
+    );
+    let jsonBody = await response.json();
+    return jsonBody.Exists;
+}
 export async function loginUser (email, password) {
     const loginBody = {
         Email: email,

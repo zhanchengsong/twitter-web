@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Card, Container, Row, Col, Form, Button, Nav, InputGroup} from "react-bootstrap";
-import {createUser} from "../service/userservice";
+import {createUser, checkEmail, checkUsername} from "../service/userservice";
 import "./SignUp.css"
 const validEmailRegex =
     RegExp(/^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i);
@@ -31,7 +31,7 @@ export class SignUp extends Component {
     });
   }
 
-  handleInputChange = (event) => {
+  handleInputChange = async (event) => {
     const target = event.target;
     switch (target.name) {
       case 'icon':
@@ -49,17 +49,36 @@ export class SignUp extends Component {
         });
         break;}
       case 'email':
-        {let emailError = validEmailRegex.test(target.value) ? null : "Not a valid email address";
+        {
+          this.setState({email: target.value});
+          let emailError = null;
+          if (!validEmailRegex.test(target.value)) {
+             emailError = "Not a valid email address"
+          }
+          else {
+            if (await checkEmail(target.value)) {
+              emailError = "The email address has registered. Pleas login";
+            }
+          }
+
          let errors = this.state.errors;
          errors.emailError = emailError;
-         this.setState({errors:errors, email: target.value});
+         this.setState({errors:errors});
          break;}
       case 'username':
-        {let usernameError = target.value.length >= 5 && !target.value.includes(' ') ?
-            null : "Username should have at least 5 characters and contains no space";
+        this.setState({username: target.value});
+        {let usernameError;
+        if (! ( target.value.length >= 5 && !target.value.includes(' ') )) {
+          usernameError = "Username should have at least 5 characters and contains no space";
+        }
+        else {
+          if (await checkUsername(target.value)) {
+            usernameError = "Username is taken, try another one";
+          }
+        }
          let errors = this.state.errors;
          errors.usernameError = usernameError;
-         this.setState({errors:errors, username: target.value});
+         this.setState({errors:errors});
         break;}
       case 'displayName':
         {let dnError = target.value.length >= 2 ? null : "Display Name should be at least 2 characters long"
@@ -97,7 +116,11 @@ export class SignUp extends Component {
      }
 
   }
-  render() {
+
+  checkUsernameExists(username) {
+
+
+  }  render() {
     return (
         <div className="signup-container my-auto">
           <Card className="col-6 col-lg-6 login-card mt-2 mp-2 hv-center my-auto">

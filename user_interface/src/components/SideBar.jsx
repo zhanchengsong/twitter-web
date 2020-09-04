@@ -4,6 +4,7 @@ import { GoHome, GoPerson, GoMail, GoBell, GoSignOut } from "react-icons/go";
 import { FaHashtag } from "react-icons/fa";
 import store from "../redux/store";
 import {getSocket} from "../service/socket-io-service";
+import {logoutAction} from "../redux/userActions";
 
 export class SideBar extends Component {
   constructor() {
@@ -14,10 +15,7 @@ export class SideBar extends Component {
     }
   }
   handleLogout = () => {
-    store.dispatch({
-      type: "LogOut",
-    });
-    console.log(store.getState());
+      this.props.dispatch(logoutAction());
   };
   render() {
     return (
@@ -62,7 +60,7 @@ export class SideBar extends Component {
       </Navbar>
     );
   }
-    bindSocketIO = (socket) => {
+  bindSocketIO = (socket) => {
         console.log("Binding socket event");
         socket.on("hello", data => {
             console.log("Hello sent data" + data);

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import CNavBar from "../containers/CNavbar";
 import SideBar from "../components/SideBar";
@@ -16,7 +16,7 @@ export class Main extends Component {
 
   render() {
     return (
-      <Container fluid>
+    <Container fluid>
         <Row bg="info">
           <Col>
             <CNavBar />

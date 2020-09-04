@@ -1,7 +1,7 @@
-import {LOG_IN} from './actionTypes';
+import {LOG_IN,LOG_OUT} from './actionTypes';
 
 export default function userReducer(
-  state = {},
+  state = {isLoggedIn: false, userProfile: {}, JWTToken:null},
   action
 ) {
   switch (action.type) {
@@ -12,16 +12,11 @@ export default function userReducer(
         userProfile: action.userProfile,
         JWTToken: action.JWTToken,
       };
-    case "LogOut":
+    case LOG_OUT:
       return {
         ...state,
         isLoggedIn: false,
-        userProfile: {
-          ...state.userProfile,
-          userName: "UserName",
-          userID: "userID",
-          userPic: "http://userpic",
-        },
+        userProfile: null,
         JWTToken: null,
       };
 

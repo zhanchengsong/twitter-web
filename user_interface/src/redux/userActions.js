@@ -1,4 +1,4 @@
-import {LOG_IN} from './actionTypes'
+import {LOG_IN, LOG_OUT} from './actionTypes'
 export const loginAction = (userProfile, jwtToken) => {
     return {
         type: LOG_IN, 
@@ -6,3 +6,8 @@ export const loginAction = (userProfile, jwtToken) => {
         JWTToken: jwtToken
     }
 };
+export const logoutAction = () => {
+    return {
+        type: LOG_OUT
+    }
+}

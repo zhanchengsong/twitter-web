@@ -28,7 +28,7 @@ export class ProfileInfo extends Component {
               style={{ height: "100px" }}
             >
               <Col>
-                <h4 className="font-weight-bold">Gordon</h4>
+                <h4 className="font-weight-bold">{this.props.userProfile.displayName}</h4>
                 <h6>{"@" + this.props.userProfile.userName}</h6>
                 <h6>
                   {1} Following {"  "} {6} Followers

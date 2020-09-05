@@ -19,7 +19,7 @@ export class NavBar extends Component {
           <Nav.Link href="/main/profile">
             <Image
               style={{ width: 30, height: "auto" }}
-              src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+              src={this.props.userProfile.userPic || ""}
               roundedCircle
             />
           </Nav.Link>

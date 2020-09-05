@@ -2,8 +2,8 @@ import {ProfileInfo} from '../components/ProfileInfo';
 import {connect} from 'react-redux';
 const mapStateToProp = state => {
     return {
-        userProfile: state.userProfile,
-        JWTToken: state.JWTToken
+        userProfile: state.user.userProfile,
+        JWTToken: state.user.JWTToken
     }
 }
 

@@ -36,6 +36,7 @@ export class LogIn extends Component {
               userName: data.username,
               userID: data.ID,
               userPic: data.iconUrl,
+              displayName: data.displayName
             }, data.jwtToken)
         );
         this.setState({loggedIn:true})

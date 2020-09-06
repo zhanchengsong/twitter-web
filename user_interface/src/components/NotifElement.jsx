@@ -1,12 +1,40 @@
 import React, { Component } from "react";
-import { Container } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 
 export class NotifElement extends Component {
+  constructor(props) {
+    super(props);
+    this.handleContent = this.handleContent.bind(this);
+  }
+
+  handleContent = () => {
+    switch (this.props.NotifType) {
+      case "mention": {
+        return `User ${this.props.user} mentioned you in a post/comment. Click to view.`;
+      }
+      case "comment": {
+        return `User ${this.props.user} commented in one of your posts. Click to view.`;
+      }
+      case "like": {
+        return `User ${this.props.user} liked one of your posts. Click to view.`;
+      }
+      case "share": {
+        return `User ${this.props.user} shared one of your posts. Click to view.`;
+      }
+      default: {
+        return;
+      }
+    }
+  };
+
   render() {
     return (
-      <Container fluid className="d-block">
-        <p>look at me</p>
-      </Container>
+      <Nav.Link
+        href={"tweet/" + this.props.tweetID}
+        className="LoginText text-center bg-ligh"
+      >
+        <h5>{this.handleContent}</h5>
+      </Nav.Link>
     );
   }
 }

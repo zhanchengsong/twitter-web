@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import { Nav, Badge, Navbar } from "react-bootstrap";
-import { GoHome, GoPerson, GoMail, GoBell, GoSignOut } from "react-icons/go";
+import { GoHome, GoPerson, GoBell, GoSignOut } from "react-icons/go";
 import { FaHashtag } from "react-icons/fa";
-import store from "../redux/store";
-import {getSocket} from "../service/socket-io-service";
-import {logoutAction} from "../redux/userActions";
+import { getSocket } from "../service/socket-io-service";
+import { logoutAction } from "../redux/userActions";
 
 export class SideBar extends Component {
   constructor() {
     super();
     this.handleLogout = this.handleLogout.bind(this);
     this.state = {
-        nCount : 0
-    }
+      nCount: 0,
+    };
   }
   handleLogout = () => {
-      this.props.dispatch(logoutAction());
+    this.props.dispatch(logoutAction());
   };
   render() {
     return (
@@ -39,7 +38,9 @@ export class SideBar extends Component {
             <GoBell className="mr-2 mb-2" />
             Notifications
           </Nav.Link>
-            {this.state.nCount !== 0 && <Badge className="bg-danger badge-pill">{this.state.nCount}</Badge> }
+          {this.state.nCount !== 0 && (
+            <Badge className="bg-danger badge-pill">{this.state.nCount}</Badge>
+          )}
         </div>
         <div className="element-center">
           <Nav.Link className="Nav-Link" href="/main/explore">
@@ -61,29 +62,29 @@ export class SideBar extends Component {
     );
   }
   bindSocketIO = (socket) => {
-        console.log("Binding socket event");
-        socket.on("hello", data => {
-            console.log("Hello sent data" + data);
-        })
-        socket.on("whom", data => {
-            console.log("Got whom event", data);
-            console.log(this.props);
-            socket.emit("register", {
-                username: this.props.username
-            });
-        })
-        socket.on("mentions", data => {
-            console.log("Got mentions!");
-            console.log(data);
-            this.setState({
-                nCount: data.length
-            })
-        })
-    }
-    componentDidMount() {
-        let socket = getSocket();
-        this.bindSocketIO(socket);
-    }
+    console.log("Binding socket event");
+    socket.on("hello", (data) => {
+      console.log("Hello sent data" + data);
+    });
+    socket.on("whom", (data) => {
+      console.log("Got whom event", data);
+      console.log(this.props);
+      socket.emit("register", {
+        username: this.props.username,
+      });
+    });
+    socket.on("mentions", (data) => {
+      console.log("Got mentions!");
+      console.log(data);
+      this.setState({
+        nCount: data.length,
+      });
+    });
+  };
+  componentDidMount() {
+    let socket = getSocket();
+    this.bindSocketIO(socket);
+  }
 }
 
 export default SideBar;

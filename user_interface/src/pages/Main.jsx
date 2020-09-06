@@ -1,22 +1,17 @@
 import React, { Component } from "react";
-import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import CNavBar from "../containers/CNavbar";
-import SideBar from "../components/SideBar";
 import Feed from "../components/Feed";
-import ProfileInfo from "../components/ProfileInfo";
 import CProfileInfo from "../containers/CProfileInfo";
 import Notifications from "../components/Notifications";
 import Exploring from "../components/Exploring";
 import Suggested from "../components/Suggested";
-import {getSocket} from "../service/socket-io-service";
-import {socketCreateAction} from "../redux/socketActions";
 import CSideBar from "../containers/CSideBar";
 export class Main extends Component {
-
   render() {
     return (
-    <Container fluid>
+      <Container fluid>
         <Row bg="info">
           <Col>
             <CNavBar />
@@ -49,8 +44,6 @@ export class Main extends Component {
       </Container>
     );
   }
-
-
 }
 
 export default Main;

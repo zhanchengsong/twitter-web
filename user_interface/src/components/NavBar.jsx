@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Navbar, Nav, Form, Button, FormControl, Image } from "react-bootstrap";
 import "../redux/actionTypes";
+import serviceURL from "../configuration/service-path";
 
 export class NavBar extends Component {
   render() {
@@ -19,7 +20,9 @@ export class NavBar extends Component {
           <Nav.Link href="/main/profile">
             <Image
               style={{ width: 30, height: "auto" }}
-              src={this.props.userProfile.userPic || ""}
+              src={
+                  "https://twitter-icons.s3.amazonaws.com/" +
+                  this.props.userProfile.userPic  || ""}
               roundedCircle
             />
           </Nav.Link>

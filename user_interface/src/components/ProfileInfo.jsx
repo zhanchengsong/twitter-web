@@ -16,8 +16,7 @@ export class ProfileInfo extends Component {
                 className="ProfilePhoto"
                 style={{ width: 140, height: "auto" }}
                 src={
-                  "/"+
-                  serviceURL.imageUrl +
+                  "https://twitter-icons.s3.amazonaws.com/"+
                   this.props.userProfile.userPic }
                 roundedCircle
               />

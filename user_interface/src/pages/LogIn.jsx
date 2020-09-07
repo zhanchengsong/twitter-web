@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Nav, Form, Button, Row, Col, Container } from "react-bootstrap";
-import '../service/userservice';
-import {loginUser} from "../service/userservice";
-import {loginAction} from "../redux/userActions";
+import "../service/userservice";
+import { loginUser } from "../service/userservice";
+import { loginAction } from "../redux/userActions";
 export class LogIn extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +11,8 @@ export class LogIn extends Component {
       showS: false,
       myEmail: "",
       myPassword: "",
-      loggedIn: false
+      loggedIn: false,
+      loginFail: false,
     };
     this.handleEmail = this.handleEmail.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
@@ -24,31 +25,32 @@ export class LogIn extends Component {
     // return this.state.myEmail === "gordonli121@gmail.com"
     //   ? "/main/home"
     //   : "/main/profile";
-    return this.state.loggedIn  ? "/main/home":"/login";
+    return this.state.loggedIn ? "/main/home" : "/login";
   };
 
   routeChange = () => {
-
-    loginUser(this.state.myEmail, this.state.myPassword).then( data => {
+    loginUser(this.state.myEmail, this.state.myPassword)
+      .then((data) => {
         console.log(data);
         this.props.dispatch(
-            loginAction({
+          loginAction(
+            {
               userName: data.username,
               userID: data.ID,
               userPic: data.iconUrl,
               displayName: data.displayName
             }, data.jwtToken)
+
         );
-        this.setState({loggedIn:true})
+        this.setState({ loggedIn: true });
         let path = `${this.handlePage()}`;
         console.log(path);
         this.props.history.push(path);
-    }).catch(e => {
+      })
+      .catch((e) => {
+        this.setState({ loginFail: true });
         console.log(e);
-    });
-
-
-
+      });
   };
 
   handleSubmit = (event) => {
@@ -66,7 +68,7 @@ export class LogIn extends Component {
   render() {
     return (
       <Container className="LogInPage position-fixed h-100" fluid>
-        <Row className="LogInForm bg-side col-3">
+        <Row className="LogInForm bg-side col-4">
           <Col>
             <h1 className="Logo LoginText bg-dange">MyZone</h1>
             <Form className="InputField bg-succes" onSubmit={this.handleSubmit}>
@@ -80,7 +82,7 @@ export class LogIn extends Component {
                 />
               </Form.Group>
 
-              <Form.Group controlId="formBasicPassword">
+              <Form.Group className="mt-4" controlId="formBasicPassword">
                 <Form.Label className="LoginText">Password</Form.Label>
                 <Form.Control
                   type="password"
@@ -88,6 +90,12 @@ export class LogIn extends Component {
                   value={this.state.myPassword}
                   onChange={this.handlePassword}
                 />
+
+                <Form.Text
+                  style={{ color: this.state.loginFail ? "red" : "#010d1f" }}
+                >
+                  The email or password was incorrect. Please try again.
+                </Form.Text>
               </Form.Group>
               <Form.Group className="d-flex justify-content-center">
                 <Button className="LogInButton" onClick={this.routeChange}>
@@ -97,7 +105,7 @@ export class LogIn extends Component {
             </Form>
           </Col>
         </Row>
-        <Row className="SignUpOption bg-side col-3">
+        <Row className="SignUpOption bg-side col-4">
           <Col className="col-8 bg-warnin d-flex">
             <p className="LoginText bg-ligh d-flex m-auto">
               Don't have an account?

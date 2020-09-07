@@ -4,8 +4,6 @@
   --TextColor: #b3ccdd;
 }
 
-
-
 .bg-side {
   background-color: var(--DarkBlue) !important;
 }
@@ -45,7 +43,7 @@ textarea {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -73%);
+  transform: translate(-50%, -75%);
   border: solid grey 1px;
   border-radius: 10px;
 }

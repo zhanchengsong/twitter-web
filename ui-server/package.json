@@ -19,6 +19,7 @@
   "dependencies": {
     "aws-sdk": "^2.739.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "node-redis": "^0.1.7",
     "redis": "^3.0.2",

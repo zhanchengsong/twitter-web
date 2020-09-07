@@ -8,7 +8,7 @@ let {set, get, del, setJson, getJson} = require('./services/redis-service');
 const logger = require("./logging/winston-logger");
 const {subscribeConnect} = require("./services/socket-io-service");
 const morgan = require('morgan');
-
+const {jwtMiddleware} = require('./middleware/jwtMiddleware');
 // Config for env type
 let env = process.env.ENV_TYPE;
 // Create s3 client
@@ -26,6 +26,7 @@ else {
 }
 // Register morgon for request logging
 app.use(morgan("common"));
+app.use(jwtMiddleware);
 app.get('/icon-img/:filename', function(req, res) {
     let filename = req.params.filename;
     if (!filename) {
@@ -48,7 +49,10 @@ app.get('/icon-img/:filename', function(req, res) {
         logger.error(err);
     });
 });
-
+app.get('/notifications', function(req, res){
+    let jwt = req.jwt;
+    res.send(jwt);
+})
 // Start serving at /
 app.get('/*', function(req, res) {
     let staticPath;
@@ -61,6 +65,8 @@ app.get('/*', function(req, res) {
     logger.info(`Request for static content at : ${req.path} `);
 
 });
+
+
 
 let port = process.env.PORT || 3001;
 
@@ -90,8 +96,6 @@ const consumer = createConsumer(async message => {
             socket.emit("mentions", queuedMessages);
         }
     }
-
-
 })
 consumer.start();
 

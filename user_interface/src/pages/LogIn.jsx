@@ -38,9 +38,9 @@ export class LogIn extends Component {
               userName: data.username,
               userID: data.ID,
               userPic: data.iconUrl,
-            },
-            data.jwtToken
-          )
+              displayName: data.displayName
+            }, data.jwtToken)
+
         );
         this.setState({ loggedIn: true });
         let path = `${this.handlePage()}`;

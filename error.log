@@ -1,0 +1,5 @@
+{"message":"Encountered problem when decoding jwt JsonWebTokenError: invalid signature","level":"error","service":"ui-server"}
+{"message":"Encountered problem when decoding jwt JsonWebTokenError: invalid signature","level":"error","service":"ui-server"}
+{"message":"Encountered problem when decoding jwt JsonWebTokenError: jwt malformed","level":"error","service":"ui-server"}
+{"message":"Encountered problem when decoding jwt JsonWebTokenError: jwt malformed","level":"error","service":"ui-server"}
+{"message":"Encountered problem when decoding jwt JsonWebTokenError: jwt malformed","level":"error","service":"ui-server"}

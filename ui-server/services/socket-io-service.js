@@ -1,32 +1,53 @@
 const logger = require('../logging/winston-logger');
 let {set, get, del, getJson, setJson} = require('../services/redis-service');
 const subscribeConnect = (io) => {
-    const mentionNsp = io.of('/mentions');
-    mentionNsp.on("connection",  (socket => {
-        logger.info(`New client connection from ${socket.id}`);
+    const nNsp = io.of('/notifications');
+    const cNsp = io.of('/notificationsCount');
+    nNsp.on("connection",  (socket => {
+        logger.info(`New Notification client connection from ${socket.id}`);
         socket.on("register", data => {
             logger.info("Recevied register event" + JSON.stringify(data) );
-            handleSetName(data.username, socket.id) // store the socket
-                .then( sendQueuedMessage(data.username, socket) )
+            handleSetNameNotification(data.username, socket.id) // store the socket
+                .then( p => logger.info(`Set ${data.username} to bind socket ${socket.id}`) )
                 .catch (e => {
                     logger.error(e);
                 })
         });
-        socket.emit("whom", {});
         socket.on("disconnect", () => {
             handleDisconnect(socket).then(data => {
                 logger.info("Disconnected Socket " + socket.id);
             })
         })
-        logger.info(`Said whom to the socket`);
+
+    }))
+    cNsp.on("connection",  (socket => {
+        logger.info(`New Count client connection from ${socket.id}`);
+        socket.on("register", data => {
+            logger.info("Recevied register event" + JSON.stringify(data) );
+            handleSetNameCount(data.username, socket.id) // store the socket
+                .then( p => logger.info(`Set ${data.username} to bind socket ${socket.id}`) )
+                .catch (e => {
+                    logger.error(e);
+                })
+        });
+        socket.on("disconnect", () => {
+            handleDisconnect(socket).then(data => {
+                logger.info("Disconnected Socket " + socket.id);
+            })
+        })
+
     }))
     io.on("connection", (socket) => {
-        logger.warn(`Received Generic connection from socket ${socket.id} , this should not happen`);
+        logger.warn(`Received Generic connection from socket ${socket.id}`);
     });
 }
-const handleSetName =async (username, socketId) => {
-    await set(socketId,`${username}_socket` ); // Set up a reverse look up as well
-    await set(`${username}_socket`, socketId);
+const handleSetNameNotification =async (username, socketId) => {
+    await set(socketId,`${username}_nsocket` ); // Set up a reverse look up as well
+    await set(`${username}_nsocket`, socketId);
+}
+const handleSetNameCount =async (username, socketId) => {
+    await set(socketId,`${username}_csocket` ); // Set up a reverse look up as well
+    await set(`${username}_csocket`, socketId);
 }
 const handleDisconnect = async socket => {
     let nameKey = await get(socket.id);
@@ -36,21 +57,21 @@ const handleDisconnect = async socket => {
     }
 
 }
-const sendQueuedMessage = async (username, socket) => {
-    logger.info("Sending queued messages");
-    let queuedMentions = await getJson(`${username}_mentions`);
-    logger.debug("Got queued mentions from redis: " + JSON.stringify(queuedMentions));
-    if (!queuedMentions) {
-        return;
-    }
-    if (socket.connected) {
-        socket.emit("mentions", queuedMentions);
-    }
-    else {
-        throw {msg: "Socket is closed when trying to send message"};
-    }
-
-}
+// const sendQueuedMessage = async (username, socket) => {
+//     logger.info("Sending queued messages");
+//     let queuedMentions = await getJson(`${username}_mentions`);
+//     logger.debug("Got queued mentions from redis: " + JSON.stringify(queuedMentions));
+//     if (!queuedMentions) {
+//         return;
+//     }
+//     if (socket.connected) {
+//         socket.emit("mentions", queuedMentions);
+//     }
+//     else {
+//         throw {msg: "Socket is closed when trying to send message"};
+//     }
+//
+// }
 
 
 exports.subscribeConnect = subscribeConnect;

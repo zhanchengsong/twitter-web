@@ -9,6 +9,7 @@ const logger = require("./logging/winston-logger");
 const {subscribeConnect} = require("./services/socket-io-service");
 const morgan = require('morgan');
 const {jwtMiddleware} = require('./middleware/jwtMiddleware');
+const {run} = require('./services/kafka-service');
 // Config for env type
 let env = process.env.ENV_TYPE;
 // Create s3 client
@@ -51,7 +52,72 @@ app.get('/icon-img/:filename', function(req, res) {
 });
 app.get('/notifications', function(req, res){
     let jwt = req.jwt;
-    res.send(jwt);
+    if (!jwt) { // jwt validation failed
+        return res.status(403).json({error: "JWTToken is not valid"})
+    }
+    let username = jwt.Username;
+    let msgp = getJson(`${username}_notifications`);
+    msgp.then( msg => {
+        if (msg) {
+            res.send(msg);
+        }
+        else {
+            res.send([]);
+        }
+    })
+
+})
+// Delete a single notification by id
+app.delete('/notification', function(req,res){
+    let jwt = req.jwt;
+    if (!jwt) { // jwt validation failed
+        return res.status(403).json({error: "JWTToken is not valid"})
+    }
+    let username = jwt.Username;
+    let msgp = getJson(`${username}_notifications`);
+    let mid = req.query.id;
+    if (!mid) {
+        return res.status(400).json({error: "Missing path param id"})
+    }
+    msgp.then( msg => {
+        if (!msg) {
+            res.send({});
+        }
+        else {
+            let deleted = msg.find( m => {return m.MessageId === mid });
+            if (deleted) {
+                let rest = msg.filter( m => {return m.MessageId !== mid});
+                setJson(`${username}_notifications`, rest).then(
+                    s => {
+                        res.send(deleted);
+                    }
+                ).catch(err => {
+                    logger.error(err);
+                    res.status(500).send({error: JSON.stringify(err)});
+                })
+            }
+            else {
+                res.send({});
+            }
+        }
+    })
+});
+app.get('/notificationsCount', function(req, res) {
+    let jwt = req.jwt;
+    if (!jwt) { // jwt validation failed
+        return res.status(403).json({error: "JWTToken is not valid"})
+    }
+    let username = jwt.Username;
+    logger.info("jwt user is " + username );
+    let msgp = getJson(`${username}_notifications`);
+    msgp.then( msg => {
+        if (msg) {
+            return res.send({count : msg.length});
+        }
+        else {
+            return res.send({count: 0});
+        }
+    })
 })
 // Start serving at /
 app.get('/*', function(req, res) {
@@ -75,28 +141,44 @@ let server = app.listen(port, () => {
 })
 let io = require('socket.io').listen(server);
 subscribeConnect(io);
+run(io).catch(console.error);
 // Set up SQS
-let {createConsumer} = require('./services/aws-sqs-service');
-const consumer = createConsumer(async message => {
-    let msg = {};
-    msg.MessageId = message.MessageId;
-    msg.body = JSON.parse(message.Body);
-    let receiver = msg.body.receiver;
-    logger.info("Received message from SQS " + JSON.stringify(msg));
-    let queuedMessages = await getJson(`${receiver}_mentions`);
-    if (!queuedMessages) {queuedMessages = [];}
-    queuedMessages.push(msg);
-    await setJson(`${receiver}_mentions`, queuedMessages);
-    // lets notify the user through socket.io
-    let socketId = await get(`${receiver}_socket`);
-    if (socketId) {
-        let nsp = io.of("/mentions");
-        let socket = nsp.sockets[socketId];
-        if (socket && socket.isConnected) {
-            socket.emit("mentions", queuedMessages);
-        }
-    }
-})
-consumer.start();
+// let {createConsumer} = require('./services/aws-sqs-service');
+// const consumer = createConsumer(async message => {
+//     let msg = {};
+//     msg.MessageId = message.MessageId;
+//     msg.body = JSON.parse(message.Body);
+//     let receiver = msg.body.receiver;
+//     logger.info("Received message from SQS " + JSON.stringify(msg));
+//     let queuedMessages = await getJson(`${receiver}_notifications`);
+//     if (!queuedMessages) {queuedMessages = [];}
+//     queuedMessages.push(msg);
+//     logger.info("Saving the message to redis");
+//     await setJson(`${receiver}_notifications`, queuedMessages);
+//     // lets notify the user through socket.io
+//     let csocketId = await get(`${receiver}_csocket`);
+//     let nsocketId = await get(`${receiver}_nsocket`)
+//     if (csocketId) {
+//         let cnsp = io.of("/notificationsCount");
+//         let connectedSockets = cnsp.connected;
+//         let socket = cnsp.connected[csocketId];
+//         if (socket) {
+//             logger.info("Emitting event for count " + queuedMessages.length);
+//             socket.emit("count", {count: queuedMessages.length});
+//         }
+//     }
+//     if (nsocketId) {
+//         let nnsp = io.of("/notifications");
+//         let socket = nnsp.sockets[nsocketId];
+//         if (socket && socket.isConnected) {
+//             logger.info("Emitting event for msg " + msg);
+//             socket.emit("msg", {msg: msg});
+//         }
+//     }
+// });
+// consumer.on("error", err => {
+//     logger.error(err.message);
+// })
+// consumer.start();
 
 

@@ -3,7 +3,7 @@ module.exports = function(app) {
     app.use(
         '/api/v1/users/',
         createProxyMiddleware({
-            target: 'http://localhost:3006',
+            target: 'http://localhost:3005',
             changeOrigin: true,
             pathRewrite : {'^/api/v1/users': ''}
         })
@@ -17,6 +17,27 @@ module.exports = function(app) {
     );
     app.use(
         '/socket.io/',
+        createProxyMiddleware({
+            target: 'http://localhost:3001',
+            changeOrigin: true,
+        })
+    );
+    app.use(
+        '/notifications',
+        createProxyMiddleware({
+            target: 'http://localhost:3001',
+            changeOrigin: true,
+        })
+    );
+    app.use(
+        '/notificationsCount',
+        createProxyMiddleware({
+            target: 'http://localhost:3001',
+            changeOrigin: true,
+        })
+    );
+    app.use(
+        '/notification',
         createProxyMiddleware({
             target: 'http://localhost:3001',
             changeOrigin: true,

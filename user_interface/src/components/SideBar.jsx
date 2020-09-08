@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Nav, Badge, Navbar } from "react-bootstrap";
 import { GoHome, GoPerson, GoBell, GoSignOut } from "react-icons/go";
 import { FaHashtag } from "react-icons/fa";
-import { getSocket } from "../service/socket-io-service";
 import { logoutAction } from "../redux/userActions";
+import { getNotificationCount } from "../service/notification-service";
 
 export class SideBar extends Component {
   constructor() {
@@ -62,28 +62,25 @@ export class SideBar extends Component {
     );
   }
   bindSocketIO = (socket) => {
-    console.log("Binding socket event");
-    socket.on("hello", (data) => {
-      console.log("Hello sent data" + data);
-    });
-    socket.on("whom", (data) => {
-      console.log("Got whom event", data);
-      console.log(this.props);
-      socket.emit("register", {
-        username: this.props.username,
-      });
-    });
-    socket.on("mentions", (data) => {
-      console.log("Got mentions!");
+    socket.on("count", (data) => {
       console.log(data);
       this.setState({
-        nCount: data.length,
+        nCount: data.count,
       });
+    });
+    console.log("registering with backend");
+    socket.emit("register", {
+      username: this.props.username,
     });
   };
   componentDidMount() {
-    let socket = getSocket();
-    this.bindSocketIO(socket);
+    console.log("Called Component Did Mount");
+    getNotificationCount(this.props.jwtToken).then( count => {
+       this.setState({nCount: count});
+    }).catch(e => {
+       console.log(e);
+    })
+    this.bindSocketIO(this.props.sockets.csocket);
   }
 }
 

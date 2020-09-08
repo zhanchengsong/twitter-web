@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Nav } from "react-bootstrap";
-
+import {deleteNotifications} from "../service/notification-service";
 export class NotifElement extends Component {
   constructor(props) {
     super(props);
-    this.handleContent = this.handleContent.bind(this);
+    // this.handleContent = this.handleContent.bind(this);
   }
 
   handleContent = () => {
@@ -27,13 +27,15 @@ export class NotifElement extends Component {
     }
   };
 
+
   render() {
     return (
       <Nav.Link
-        href={"tweet/" + this.props.tweetID}
-        className="LoginText text-center bg-ligh"
+          onClick={() => this.props.onElementClick(this.props.mid)}
+        // href={"tweet/" + this.props.tweetID}
+        className="LoginText text-center"
       >
-        <h5>{this.handleContent}</h5>
+        <h5>{this.handleContent()}</h5>
       </Nav.Link>
     );
   }

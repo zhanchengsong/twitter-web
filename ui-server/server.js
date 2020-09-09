@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-//const http = require('http').createServer(app);
-//const io = require('socket.io')(http);
 const aws = require('aws-sdk');
 let {set, get, del, setJson, getJson} = require('./services/redis-service');
 const logger = require("./logging/winston-logger");
@@ -142,43 +140,3 @@ let server = app.listen(port, () => {
 let io = require('socket.io').listen(server);
 subscribeConnect(io);
 run(io).catch(console.error);
-// Set up SQS
-// let {createConsumer} = require('./services/aws-sqs-service');
-// const consumer = createConsumer(async message => {
-//     let msg = {};
-//     msg.MessageId = message.MessageId;
-//     msg.body = JSON.parse(message.Body);
-//     let receiver = msg.body.receiver;
-//     logger.info("Received message from SQS " + JSON.stringify(msg));
-//     let queuedMessages = await getJson(`${receiver}_notifications`);
-//     if (!queuedMessages) {queuedMessages = [];}
-//     queuedMessages.push(msg);
-//     logger.info("Saving the message to redis");
-//     await setJson(`${receiver}_notifications`, queuedMessages);
-//     // lets notify the user through socket.io
-//     let csocketId = await get(`${receiver}_csocket`);
-//     let nsocketId = await get(`${receiver}_nsocket`)
-//     if (csocketId) {
-//         let cnsp = io.of("/notificationsCount");
-//         let connectedSockets = cnsp.connected;
-//         let socket = cnsp.connected[csocketId];
-//         if (socket) {
-//             logger.info("Emitting event for count " + queuedMessages.length);
-//             socket.emit("count", {count: queuedMessages.length});
-//         }
-//     }
-//     if (nsocketId) {
-//         let nnsp = io.of("/notifications");
-//         let socket = nnsp.sockets[nsocketId];
-//         if (socket && socket.isConnected) {
-//             logger.info("Emitting event for msg " + msg);
-//             socket.emit("msg", {msg: msg});
-//         }
-//     }
-// });
-// consumer.on("error", err => {
-//     logger.error(err.message);
-// })
-// consumer.start();
-
-

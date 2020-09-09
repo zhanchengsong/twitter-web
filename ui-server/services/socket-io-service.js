@@ -57,21 +57,6 @@ const handleDisconnect = async socket => {
     }
 
 }
-// const sendQueuedMessage = async (username, socket) => {
-//     logger.info("Sending queued messages");
-//     let queuedMentions = await getJson(`${username}_mentions`);
-//     logger.debug("Got queued mentions from redis: " + JSON.stringify(queuedMentions));
-//     if (!queuedMentions) {
-//         return;
-//     }
-//     if (socket.connected) {
-//         socket.emit("mentions", queuedMentions);
-//     }
-//     else {
-//         throw {msg: "Socket is closed when trying to send message"};
-//     }
-//
-// }
 
 
 exports.subscribeConnect = subscribeConnect;
